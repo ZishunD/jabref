@@ -1,0 +1,1 @@
+This folder is for holding all the test cases we implement for the educational test project.

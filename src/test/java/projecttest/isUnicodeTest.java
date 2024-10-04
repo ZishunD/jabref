@@ -44,6 +44,13 @@ class UnicodeToReadableCharMapTest {
         assertFalse(isUnicode("B"));      // Regular ASCII 'B'
         assertFalse(isUnicode("1"));      // Regular digit '1'
         assertFalse(isUnicode("!"));      // Special symbol '!'
+
+        // Non-mapped Unicode characters
+        assertTrue(isUnicode("\u2603"));  // Snowman ☃
+
+        // Edge cases: empty string and mixed ASCII-Unicode characters
+        assertFalse(isUnicode(""));      // Empty string
+        assertTrue(isUnicode("A\u00FC"));  // Mixed ASCII 'A' and Unicode 'ü' <- this one is special
     }
 
     // A method to check if string contains unicode character

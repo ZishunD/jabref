@@ -1,5 +1,6 @@
-package org.jabref.model.strings;
+package org.jabref.projecttest;
 
+import org.jabref.model.strings.UnicodeToReadableCharMap;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

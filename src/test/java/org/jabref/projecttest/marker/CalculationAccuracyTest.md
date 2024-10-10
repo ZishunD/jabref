@@ -1,12 +1,13 @@
+package org.jabref.projecttest;
+
 /* Copyright (C) 2024 <Peerapong Tantasilp> - All Rights Reserved
  * You may use, distribute and modify this code under the terms of the MIT license.
  */
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculationAccuracyTest {
-
 
     @Test
     public void testSimpleInterestCalculation() {

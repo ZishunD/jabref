@@ -7,12 +7,13 @@ package org.jabref.projecttest;
 import org.jabref.model.paging.Page;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PagingTest {
+class PagingTestOld {
 
     private Page<String> page;
     private Collection<String> testContent;

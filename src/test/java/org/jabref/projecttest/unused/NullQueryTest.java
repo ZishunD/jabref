@@ -1,4 +1,4 @@
-/* Copyright (C) 2024 <Sirawich Anantapong, Supitsara Sareecam> - All Rights Reserved
+/* Copyright (C) 2024 Sirawich Anantapong, Supitsara Sareecam - All Rights Reserved
  * You may use, distribute and modify this code under the terms of the MIT license.
  */
 package org.jabref.projecttest;
@@ -13,7 +13,8 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PagingTestOld {
+//This was the old paging test, cannot apply a meaningful ISP, so it is discarded.
+class NullQueryTest {
 
     private Page<String> page;
     private Collection<String> testContent;

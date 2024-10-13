@@ -1,5 +1,10 @@
-package org.jabref.model.strings;
+/* Copyright (C) 2024 Sirawich Anantapong ,Supitsara Sareecam - All Rights Reserved
+ * You may use, distribute and modify this code under the terms of the MIT license.
+ */
 
+package org.jabref.projecttest;
+
+import org.jabref.model.strings.UnicodeToReadableCharMap;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

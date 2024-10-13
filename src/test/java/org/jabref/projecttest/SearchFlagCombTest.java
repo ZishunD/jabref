@@ -1,7 +1,14 @@
-package org.jabref.model.groups;
+/* Copyright (C) 2024 Sirawich Anantapong ,Supitsara Sareecam - All Rights Reserved
+ * You may use, distribute and modify this code under the terms of the MIT license.
+ */
+
+package org.jabref.projecttest;
+//package org.jabref.model.groups;
 
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.field.StandardField;
+import org.jabref.model.groups.GroupHierarchyType;
+import org.jabref.model.groups.SearchGroup;
 import org.jabref.model.search.SearchFlags;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

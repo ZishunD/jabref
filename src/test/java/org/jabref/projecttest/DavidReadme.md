@@ -1,4 +1,4 @@
-# Test Suite : FileAnnotationTypeTest
+# Test Suite 10: FileAnnotationTypeTest
 
 ## Goal
 Verify that the `FileAnnotationType` enum can correctly identify and handle various file annotation types.

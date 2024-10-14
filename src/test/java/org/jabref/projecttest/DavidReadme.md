@@ -1,133 +1,169 @@
-## Test Case: `testFileAnnotationTypeParseValid`
+## Test Cases
 
-**Goal**:  
-Verify that the `FileAnnotationType.parse()` method correctly determines the `FileAnnotationType` for a valid `PDAnnotation` subtype.
+### 1. Test Case: `testFileAnnotationTypeParseValid`
 
-### Input Space Partitioning Characteristics:
-- **Interface-based characteristic**: Ensure that the method correctly maps valid `PDAnnotation` subtypes to corresponding `FileAnnotationType` enums.
-- **Functionality-based characteristic**: Check that the method returns the correct type when the subtype matches one of the predefined types.
+- **Goal**: Verify that the `FileAnnotationType` correctly parses valid annotation subtypes and returns the expected result.
+  
+- **Input Space Partitioning Characteristics**:
+  - **Interface-based characteristic**: Validate that the `FileAnnotationType` correctly identifies and processes valid annotation subtypes.
+  - **Functionality-based characteristic**: Ensure that the `parse()` method returns the appropriate `FileAnnotationType` enum value for each subtype.
 
-### Input Domain Modelling:
-- **Testable function**: `FileAnnotationType.parse(PDAnnotation annotation)`
-- **Parameters**:
-    - `annotation`: A valid `PDAnnotation` object with a specific subtype.
-- **Return type**: `FileAnnotationType` enum.
-- **Behavior**: The method should return the appropriate `FileAnnotationType` based on the subtype provided.
+- **Input Domain Modelling**:
+  - **Testable function**: `FileAnnotationType.parse(PDAnnotation annotation)`
+  - **Parameters**: 
+    - `annotation.getSubtype()` (String) - A valid annotation subtype such as `"Text"`.
+  - **Return type**: `FileAnnotationType`
+  - **Behavior**: The method should return the corresponding `FileAnnotationType` based on the given annotation subtype.
 
-### Model Input Domain:
-- **PDAnnotation subtype**: `"Text"`, `"Highlight"`, `"Underline"`, etc.
+- **Model Input Domain**:
+  - **Base subtype**: `"Text"`
+  - **Other subtypes**: `"Highlight"`, `"Underline"`
 
-### Test Values:
-- **Annotation subtype**: `"Text"` (for this specific case).
+- **Combine Partitions**: 
+  - Use **BCC (Base Choice Coverage)**:
+    - Base case: subtype = `"Text"`
+    - Variation: test with subtypes `"Highlight"`, `"Underline"`
 
-### Expected Behavior:
-- The `parse()` method should return `FileAnnotationType.TEXT` for a `PDAnnotation` with subtype `"Text"`.
+- **Test Values**:
+  - **Base case**: `"Text"`
+  - **Other cases**: `"Highlight"`, `"Underline"`
 
----
-
-## Test Case: `testFileAnnotationTypeParseUnknown`
-
-**Goal**:  
-Verify that the `FileAnnotationType.parse()` method returns `UNKNOWN` for an unsupported `PDAnnotation` subtype.
-
-### Input Space Partitioning Characteristics:
-- **Interface-based characteristic**: Ensure the method returns `FileAnnotationType.UNKNOWN` when given an unsupported subtype.
-- **Functionality-based characteristic**: Check for the correct log message and return behavior for unknown subtypes.
-
-### Input Domain Modelling:
-- **Testable function**: `FileAnnotationType.parse(PDAnnotation annotation)`
-- **Parameters**:
-    - `annotation`: A `PDAnnotation` with an unsupported subtype.
-- **Return type**: `FileAnnotationType.UNKNOWN`.
-- **Behavior**: The method should return `UNKNOWN` if the subtype does not match any predefined annotation type.
-
-### Model Input Domain:
-- **PDAnnotation subtype**: Any string not in the predefined list (e.g., `"InvalidSubtype"`).
-
-### Test Values:
-- **Annotation subtype**: `"InvalidSubtype"`.
-
-### Expected Behavior:
-- The `parse()` method should return `FileAnnotationType.UNKNOWN` and log an appropriate message.
+- **Expected Behavior**:
+  - The `parse()` method should return:
+    - `FileAnnotationType.TEXT` for `"Text"`.
+    - `FileAnnotationType.HIGHLIGHT` for `"Highlight"`.
+    - `FileAnnotationType.UNDERLINE` for `"Underline"`.
 
 ---
 
-## Test Case: `testFileAnnotationTypeIsMarkedFileAnnotationTypeTrue`
+### 2. Test Case: `testFileAnnotationTypeParseUnknown`
 
-**Goal**:  
-Verify that the `FileAnnotationType.isMarkedFileAnnotationType()` correctly identifies supported marked annotation types.
+- **Goal**: Verify that the `FileAnnotationType` correctly handles unknown annotation subtypes and returns `UNKNOWN`.
 
-### Input Space Partitioning Characteristics:
-- **Interface-based characteristic**: Ensure that the method correctly identifies valid marked annotation types.
-- **Functionality-based characteristic**: Check the correctness of the method for known marked types.
+- **Input Space Partitioning Characteristics**:
+  - **Interface-based characteristic**: Validate that the `FileAnnotationType` handles unknown subtypes correctly.
+  - **Functionality-based characteristic**: Ensure that the `parse()` method returns `FileAnnotationType.UNKNOWN` for unrecognized subtypes.
 
-### Input Domain Modelling:
-- **Testable function**: `FileAnnotationType.isMarkedFileAnnotationType(String annotationType)`
-- **Parameters**:
-    - `annotationType`: A valid marked annotation type.
-- **Return type**: `boolean`.
-- **Behavior**: The method should return true for valid marked annotation types.
+- **Input Domain Modelling**:
+  - **Testable function**: `FileAnnotationType.parse(PDAnnotation annotation)`
+  - **Parameters**:
+    - `annotation.getSubtype()` (String) - An unknown annotation subtype such as `"InvalidSubtype"`.
+  - **Return type**: `FileAnnotationType`
+  - **Behavior**: The method should return `FileAnnotationType.UNKNOWN` when given an invalid or unrecognized subtype.
 
-### Model Input Domain:
-- **annotationType**: `"Highlight"`, `"Underline"`, `"Squiggly"`, `"StrikeOut"`.
+- **Model Input Domain**:
+  - **Base subtype**: `"Unknown"`
+  - **Other subtypes**: `"InvalidSubtype"`
 
-### Test Values:
-- **annotationType**: `"Highlight"`.
+- **Combine Partitions**:
+  - Use **BCC (Base Choice Coverage)**:
+    - Base case: subtype = `"Unknown"`
+    - Variation: test with `"InvalidSubtype"`
 
-### Expected Behavior:
-- The method should return `true` for the `"Highlight"` annotation type.
+- **Test Values**:
+  - **Base case**: `"Unknown"`
+  - **Other case**: `"InvalidSubtype"`
 
----
-
-## Test Case: `testFileAnnotationTypeIsMarkedFileAnnotationTypeFalse`
-
-**Goal**:  
-Verify that the `FileAnnotationType.isMarkedFileAnnotationType()` correctly returns false for unsupported or unmarked annotation types.
-
-### Input Space Partitioning Characteristics:
-- **Interface-based characteristic**: Ensure that the method returns false for invalid or unmarked annotation types.
-- **Functionality-based characteristic**: Check the correctness of the method for types that are not linked.
-
-### Input Domain Modelling:
-- **Testable function**: `FileAnnotationType.isMarkedFileAnnotationType(String annotationType)`
-- **Parameters**:
-    - `annotationType`: An invalid or unmarked annotation type.
-- **Return type**: `boolean`.
-- **Behavior**: The method should return false for unsupported or unmarked annotation types.
-
-### Model Input Domain:
-- **annotationType**: `"Text"`, `"Line"`, `"Circle"`, `"Unknown"`.
-
-### Test Values:
-- **annotationType**: `"Text"`.
-
-### Expected Behavior:
-- The method should return `false` for the `"Text"` annotation type.
+- **Expected Behavior**:
+  - The `parse()` method should return `FileAnnotationType.UNKNOWN` for both cases.
 
 ---
 
-## Test Case: `testFileAnnotationTypeToString`
+### 3. Test Case: `testFileAnnotationTypeIsMarkedFileAnnotationTypeTrue`
 
-**Goal**:  
-Verify that the `toString()` method of the `FileAnnotationType` enum returns the correct string representation.
+- **Goal**: Verify that the `FileAnnotationType` correctly identifies marked annotation subtypes and returns `true`.
 
-### Input Space Partitioning Characteristics:
-- **Interface-based characteristic**: Ensure that the `toString()` method correctly returns the string name of the `FileAnnotationType`.
-- **Functionality-based characteristic**: Validate that the string name matches the expected value for each enum type.
+- **Input Space Partitioning Characteristics**:
+  - **Interface-based characteristic**: Validate that the method correctly identifies marked annotation subtypes.
+  - **Functionality-based characteristic**: Ensure that the `isMarkedFileAnnotationType()` method returns `true` for marked subtypes.
 
-### Input Domain Modelling:
-- **Testable function**: `FileAnnotationType.toString()`
-- **Parameters**: None.
-- **Return type**: `String`.
-- **Behavior**: The method should return the correct string representation of the enum.
+- **Input Domain Modelling**:
+  - **Testable function**: `FileAnnotationType.isMarkedFileAnnotationType(String annotationType)`
+  - **Parameters**:
+    - `annotationType` (String) - A marked annotation type, such as `"Highlight"`.
+  - **Return type**: boolean
+  - **Behavior**: The method should return `true` for marked annotation types.
 
-### Model Input Domain:
-- **FileAnnotationType**: Any valid enum type, e.g., `TEXT`, `HIGHLIGHT`, etc.
+- **Model Input Domain**:
+  - **Base annotation type**: `"Highlight"`
+  - **Other annotation types**: `"Underline"`
 
-### Test Values:
-- **FileAnnotationType**: `FileAnnotationType.TEXT`.
+- **Combine Partitions**:
+  - Use **BCC (Base Choice Coverage)**:
+    - Base case: annotation type = `"Highlight"`
+    - Variation: test with `"Underline"`
 
-### Expected Behavior:
-- The `toString()` method should return `"Text"` for `FileAnnotationType.TEXT`.
+- **Test Values**:
+  - **Base case**: `"Highlight"`
+  - **Other case**: `"Underline"`
+
+- **Expected Behavior**:
+  - The `isMarkedFileAnnotationType()` method should return `true` for both `"Highlight"` and `"Underline"`.
 
 ---
+
+### 4. Test Case: `testFileAnnotationTypeIsMarkedFileAnnotationTypeFalse`
+
+- **Goal**: Verify that the `FileAnnotationType` correctly identifies non-marked annotation subtypes and returns `false`.
+
+- **Input Space Partitioning Characteristics**:
+  - **Interface-based characteristic**: Validate that the method correctly identifies non-marked annotation subtypes.
+  - **Functionality-based characteristic**: Ensure that the `isMarkedFileAnnotationType()` method returns `false` for non-marked subtypes.
+
+- **Input Domain Modelling**:
+  - **Testable function**: `FileAnnotationType.isMarkedFileAnnotationType(String annotationType)`
+  - **Parameters**:
+    - `annotationType` (String) - A non-marked annotation type such as `"Text"`.
+  - **Return type**: boolean
+  - **Behavior**: The method should return `false` for non-marked annotation types.
+
+- **Model Input Domain**:
+  - **Base annotation type**: `"Text"`
+  - **Other annotation types**: `"Popup"`
+
+- **Combine Partitions**:
+  - Use **BCC (Base Choice Coverage)**:
+    - Base case: annotation type = `"Text"`
+    - Variation: test with `"Popup"`
+
+- **Test Values**:
+  - **Base case**: `"Text"`
+  - **Other case**: `"Popup"`
+
+- **Expected Behavior**:
+  - The `isMarkedFileAnnotationType()` method should return `false` for both `"Text"` and `"Popup"`.
+
+---
+
+### 5. Test Case: `testFileAnnotationTypeToString`
+
+- **Goal**: Verify the string representation of the `FileAnnotationType`.
+
+- **Input Space Partitioning Characteristics**:
+  - **Interface-based characteristic**: Validate that the `toString()` method returns the correct string representation of the annotation type.
+  - **Functionality-based characteristic**: Ensure that each `FileAnnotationType` has an appropriate string representation.
+
+- **Input Domain Modelling**:
+  - **Testable function**: `FileAnnotationType.toString()`
+  - **Parameters**:
+    - `annotationType` (FileAnnotationType) - A known annotation type such as `FileAnnotationType.TEXT`.
+  - **Return type**: String
+  - **Behavior**: The `toString()` method should return the correct string representation of the `FileAnnotationType`.
+
+- **Model Input Domain**:
+  - **Base annotation type**: `FileAnnotationType.TEXT`
+  - **Other annotation types**: `FileAnnotationType.HIGHLIGHT`
+
+- **Combine Partitions**:
+  - Use **BCC (Base Choice Coverage)**:
+    - Base case: annotation type = `FileAnnotationType.TEXT`
+    - Variation: test with `FileAnnotationType.HIGHLIGHT`
+
+- **Test Values**:
+  - **Base case**: `FileAnnotationType.TEXT`
+  - **Other case**: `FileAnnotationType.HIGHLIGHT`
+
+- **Expected Behavior**:
+  - The `toString()` method should return:
+    - `"Text"` for `FileAnnotationType.TEXT`.
+    - `"Highlight"` for `FileAnnotationType.HIGHLIGHT`.

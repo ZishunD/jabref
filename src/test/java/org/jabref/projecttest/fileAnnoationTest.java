@@ -7,6 +7,7 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.junit.jupiter.api.Test;
 import org.jabref.model.pdf.FileAnnotationType;
 import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -15,44 +16,51 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileAnnotationTypeTest {
 
     // Test case: 1
-    // Test Case: testFileAnnotationTypeParse
-    // Goal: Verify that the parse method correctly returns "UNKNOWN" if the type isn't in FileAnnotationType.
+    // Test Case: testParseHighlight
+    // Goal: Verify if
     @Test
-    public void testFileAnnotationTypeParse() {
-        // Test with valid annotation type
+    public void testParseHighlight() {
+        // Test with valid annotation type while supported
         PDAnnotation annotation = Mockito.mock(PDAnnotation.class);
-        Mockito.when(annotation.getSubtype()).thenReturn("Text");
+        Mockito.when(annotation.getSubtype()).thenReturn("HIGHLIGHT");
 
 
-        FileAnnotationType result = FileAnnotationType.parse(annotation);
-        assertEquals(FileAnnotationType.TEXT, result);
-
-        //Test with unknown annotation type
-        PDAnnotation annotationU = Mockito.mock(PDAnnotation.class);
-        Mockito.when(annotationU.getSubtype()).thenReturn("img");
-
-
-        FileAnnotationType resultU = FileAnnotationType.parse(annotationU);
-        assertEquals(FileAnnotationType.UNKNOWN, resultU);
+        FileAnnotationType resultHighlightValid = FileAnnotationType.parse(annotation);
+        boolean resultHighlightSupported = FileAnnotationType.isMarkedFileAnnotationType(annotation.getSubtype());
+        assertEquals(FileAnnotationType.HIGHLIGHT, resultHighlightValid);
+        assertTrue(resultHighlightSupported);
     }
 
     // Test case: 2
-    // Test Case: testIsMarkedFileAnnotationType
-    // Goal: Verify that the FileAnnotationType correctly identifies marked file annotation types.
+    // Test Case: testParseKnownButUnsupported
+    // Goal: verify
     @Test
-    public void testIsMarkedFileAnnotationType() {
-        //Test with supported marked FileAnnotation type
-        String annotationType = "Highlight";
+    public void testParseKnownButUnsupported() {
+        // Test with valid annotation type while not supported
+        PDAnnotation annotation = Mockito.mock(PDAnnotation.class);
+        Mockito.when(annotation.getSubtype()).thenReturn("TEXT");
 
-        boolean result = FileAnnotationType.isMarkedFileAnnotationType(annotationType);
 
-        assertTrue(result);
+        FileAnnotationType resultTextValid = FileAnnotationType.parse(annotation);
+        boolean resultTextUnsupported = FileAnnotationType.isMarkedFileAnnotationType(annotation.getSubtype());
+        assertEquals(FileAnnotationType.TEXT, resultTextValid);
+        assertFalse(resultTextUnsupported);
+    }
 
-        ////Test with unsupported marked FileAnnotation type
-        String annotationTypeU = "LINE";
+    @Test
+    // Test ase: 3
+    // Test Case: testParseUnknown
+    // Goal:
+    public void testParseUnknown() {
+        // Test with unknown annotation type
+        PDAnnotation annotation = Mockito.mock(PDAnnotation.class);
+        Mockito.when(annotation.getSubtype()).thenReturn("IMG");
 
-        boolean resultU = FileAnnotationType.isMarkedFileAnnotationType(annotationTypeU);
 
-        assertFalse(resultU);
+        FileAnnotationType resultTextValid = FileAnnotationType.parse(annotation);
+        boolean resultTextUnsupported = FileAnnotationType.isMarkedFileAnnotationType(annotation.getSubtype());
+        assertEquals(FileAnnotationType.UNKNOWN, resultTextValid);
+        assertFalse(resultTextUnsupported);
     }
 }
+

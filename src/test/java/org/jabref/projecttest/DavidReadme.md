@@ -1,61 +1,55 @@
-# Test Case: `testFileAnnotationTypeParse`
+# Test Suite 6: FileAnnotationTypeTest
 
-- **Goal**: Verify that the `parse` method correctly returns `FileAnnotationType.TEXT` for known types and `UNKNOWN` for unsupported types.
-- **Input Space Partitioning Characteristics**:
-  - **Interface-based characteristic**: Validate that the `parse` method processes both valid and unknown annotation types correctly.
-  - **Functionality-based characteristic**: Ensure that the method returns the appropriate `FileAnnotationType` enumeration based on the input.
+## Goal
+Verify that the `FileAnnotationType` enum can correctly identify and handle various file annotation types.
 
-## Input Domain Modelling:
-1. **Identify testable function**: `FileAnnotationType.parse(PDAnnotation annotation)`
-2. **Parameters**:
-   - `annotation` (PDAnnotation).
-3. **Return type**: FileAnnotationType.
-4. **Behavior**: The method should return `FileAnnotationType.TEXT` for recognized types and `UNKNOWN` for unrecognized types.
+## Testable Functions
+- **parse(PDAnnotation annotation)**: This method should determine the `FileAnnotationType` based on a given `PDAnnotation` subtype. If the type is unsupported, it should return `UNKNOWN`.
+- **isMarkedFileAnnotationType(String annotationType)**: This method should check if the given annotation type is a supported marked `FileAnnotationType`.
 
-## Model Input Domain:
-- **annotation**: 
-  - Valid subtype (e.g., `"Text"`).
-  - Invalid subtype (e.g., `"img"`).
+## Parameters
+- **PDAnnotation annotation**: The raw PDF annotation whose subtype will be evaluated.
+- **String annotation type**: A type descriptor to check against the supported marked file annotation types.
 
-## Combine Partitions:
-- Use **BCC (Base Choice Coverage)** for this case.
+## Return Types
+- `parse` returns the corresponding `FileAnnotationType`.
+- `isMarkedFileAnnotationType` returns a boolean indicating whether the type is marked.
 
-## Test Values:
-- **Valid Annotation**: `PDAnnotation` with subtype `"Text"`
-- **Invalid Annotation**: `PDAnnotation` with subtype `"img"`
+## Return Values
+- The `parse` method is expected to return the appropriate `FileAnnotationType`, or `UNKNOWN` if the type is not defined.
+- The `isMarkedFileAnnotationType` method returns `true` if the annotation type is supported and linked; otherwise, it returns `false`.
 
-## Expected Behavior:
-- The method should return `FileAnnotationType.TEXT` for the valid subtype.
-- The method should return `FileAnnotationType.UNKNOWN` for the invalid subtype.
+## Exceptional Behavior
+- When an unsupported annotation type is passed to the `parse` method, it logs a warning and returns `UNKNOWN`.
 
----
+## Input Space Partitioning Characteristics
+### Interface-based characteristic:
+- **C1**: Valid/Invalid annotation subtypes.
 
-# Test Case: `testIsMarkedFileAnnotationType`
+### Functionality-based characteristic:
+- **C2**: Supported/Unsupported annotation types.
 
-- **Goal**: Verify that the `FileAnnotationType` correctly identifies marked file annotation types.
-- **Input Space Partitioning Characteristics**:
-  - **Interface-based characteristic**: Ensure that the method can handle both supported and unsupported marked annotation types.
-  - **Functionality-based characteristic**: Validate that the method returns `true` for recognized marked types and `false` for unsupported types.
+## Model Input Domain
+- **Valid Annotations**: Annotations that match the defined `FileAnnotationType` values.
+- **Invalid Annotations**: Annotations that do not match any defined `FileAnnotationType`.
 
-## Input Domain Modelling:
-1. **Identify testable function**: `FileAnnotationType.isMarkedFileAnnotationType(String annotationType)`
-2. **Parameters**:
-   - `annotationType` (String).
-3. **Return type**: boolean.
-4. **Behavior**: The method should return `true` for supported marked types and `false` for unsupported types.
+## Combine Partitions
+Using BCC (Base Choice Coverage):
+- **Mapped/Unmapped**: {True, False} (represents linked annotation types)
+- **Supported/Unsupported**: {True, False} (indicates if the annotation type is recognized)
 
-## Model Input Domain:
-- **annotationType**:
-  - Supported type (e.g., `"Highlight"`).
-  - Unsupported type (e.g., `"LINE"`).
+## Test Values and Expected Results
 
-## Combine Partitions:
-- Use **BCC (Base Choice Coverage)** for this case.
+### Base Choice: (Annotation Type, Supported) & (Unknown, unsupported)
+- Number of Tests: 1 + ((2-1) + (2-1)) = 3 tests
 
-## Test Values:
-- **Supported Type**: `"Highlight"`
-- **Unsupported Type**: `"LINE"`
+| Test Case | Annotation Type | Expected Result |
+|-----------|-----------------|------------------|
+| 1         | HIGHLIGHT       | Supported (True) |
+| 2         | TEXT            | Not supported (False) |
+| 3         | UNKNOWN          | Not supported (False) |
 
-## Expected Behavior:
-- The method should return `true` for the supported type.
-- The method should return `false` for the unsupported type.
+## Test Cases
+- **Test case 1**: `testParseHighlight`
+- **Test case 2**: `testParseKnownButUnsupported`
+- **Test case 3**: `testParseUnknown`

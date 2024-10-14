@@ -17,7 +17,7 @@ class FileAnnotationTypeTest {
 
     // Test case: 1
     // Test Case: testParseHighlight
-    // Goal: Verify if
+    // Goal: Verify if this system can recognize a valid and supported file type
     @Test
     public void testParseHighlight() {
         // Test with valid annotation type while supported
@@ -33,7 +33,7 @@ class FileAnnotationTypeTest {
 
     // Test case: 2
     // Test Case: testParseKnownButUnsupported
-    // Goal: verify
+    // Goal: verify if the system can recognize a valid but unsupported file type
     @Test
     public void testParseKnownButUnsupported() {
         // Test with valid annotation type while not supported
@@ -48,9 +48,9 @@ class FileAnnotationTypeTest {
     }
 
     @Test
-    // Test ase: 3
+    // Test case: 3
     // Test Case: testParseUnknown
-    // Goal:
+    // Goal: verify if the system can recognize an invalid and unsupported file type
     public void testParseUnknown() {
         // Test with unknown annotation type
         PDAnnotation annotation = Mockito.mock(PDAnnotation.class);

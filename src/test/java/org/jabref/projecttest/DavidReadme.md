@@ -50,6 +50,9 @@ Using BCC (Base Choice Coverage):
 | 3         | UNKNOWN          | Not supported (False) |
 
 ## Test Cases
-- **Test case 1**: `testParseHighlight`
-- **Test case 2**: `testParseKnownButUnsupported`
-- **Test case 3**: `testParseUnknown`
+
+| Test Cases                                     |  Expected Outcome  |
+|------------------------------------------------|--------------------|
+|- **Test case 1**: `testParseHighlight`           |  (HIGHLIGHT, TURE)  |
+|- **Test case 2**: `testParseKnownButUnsupported` |  (TEXT, FALSE)  |
+|- **Test case 3**: `testParseUnknown`             |  (UNKNOWN, FALSE)  |

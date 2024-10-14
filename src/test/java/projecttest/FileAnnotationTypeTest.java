@@ -3,7 +3,7 @@
  */
 package org.jabref.projecttest;
 
-import org.jabref.model.paging.FileAnnotationType;
+import org.jabref.model.pdf.FileAnnotationType;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
